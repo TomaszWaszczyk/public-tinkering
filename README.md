@@ -4,6 +4,11 @@ I share my technical learning publicly to deepen my understanding, help others, 
 
 ## IndexedDB vs LocalStorage
 
+IndexedDB - everyone knows LocalStorage but there is better alternative
+
+IndexedDB is ideal for offline mode because it allows web applications to store large amounts of structured data directly in the user's browser, enabling full CRUD operations without an internet connection. This means users can interact with the app and access or modify their data while offline, and any changes can be synchronized with the server once connectivity is restored.
+
+
 ```
 let openRequest = indexedDB.open("store", 1);
 
