@@ -2,6 +2,17 @@
 
 I share my technical learning publicly to deepen my understanding, help others, and connect with the community. Public learning invites feedback, collaboration, and faster growth for everyone involved.
 
+## Garbage collector in the browser
+
+Using a `WeakMap` in JavaScript offers several key advantages:
+
+- Automatic Memory Management
+
+- No Manual Cleanup Required: Because entries are automatically removed when the key object becomes unreachable, you don't need to manually delete entries to free up memory.
+- Prevents Memory Leaks: Unlike Map, which holds strong references to keys and can keep objects in memory indefinitely, WeakMap allows objects to be garbage collected as soon as they are no longer referenced elsewhere, reducing the risk of unintentional memory retention
+
+Just garbage collector in the web browser ;-)
+
 ## IndexedDB vs LocalStorage
 
 IndexedDB - everyone knows LocalStorage but there is better alternative
