@@ -13,7 +13,7 @@ Using a `WeakMap` in JavaScript offers several key advantages:
 
 ![weakmap](./resources/weakmap.png)
 
-Just garbage collector in the web browser ;-)
+Just garbage collector in a web browser ;-)
 
 ## IndexedDB vs LocalStorage
 
