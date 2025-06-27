@@ -2,6 +2,28 @@
 
 I share my technical learning publicly to deepen my understanding, help others, and connect with the community. Public learning invites feedback, collaboration, and faster growth for everyone involved.
 
+## Unmount
+
+```
+import React, { useEffect } from 'react';
+
+function MyComponent() {
+  useEffect(() => {
+    // This code runs when the component mounts
+
+    return () => {
+      // This code runs when the component unmounts
+      console.log('Component is unmounting!');
+      // Call your cleanup function here
+    };
+  }, []); // Empty dependency array ensures it runs only on mount/unmount
+
+  return <div>Hello!</div>;
+}
+
+export default MyComponent;
+```
+
 ## Virtualization
 
 Virtualization is a widely used performance technique in React for efficiently rendering large lists, tables, or grids. Virtualization (also called windowing) works by only rendering the items that are currently visible in the viewport, plus a small buffer, instead of rendering every item in a large dataset at once. This dramatically reduces the number of DOM nodes, improves rendering speed, lowers memory usage, and results in smoother scrolling and better overall app responsiveness
