@@ -2,7 +2,7 @@
 
 I share my technical learning publicly to deepen my understanding, help others, and connect with the community. Public learning invites feedback, collaboration, and faster growth for everyone involved.
 
-### as and :
+### as and : (type assertion vs type annotation)
 
 ```
 // Define the User type
