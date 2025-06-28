@@ -2,6 +2,25 @@
 
 I share my technical learning publicly to deepen my understanding, help others, and connect with the community. Public learning invites feedback, collaboration, and faster growth for everyone involved.
 
+### as and :
+
+```
+// Define the User type
+type User = {
+  name: string;
+  age: number;
+};
+
+// Type annotation using ':'
+let data: unknown = '{"name":"Alice","age":30}';
+
+// Type assertion using 'as'
+let user = JSON.parse(data as string) as User;
+
+// Now TypeScript knows 'user' is of type User
+console.log(`User: ${user.name}, Age: ${user.age}`);
+```
+
 ### httpOnly
 
 An HttpOnly cookie is a type of cookie in web applications that includes the HttpOnly attribute, which restricts access to the cookie from client-side scripts such as JavaScript. This security feature is crucial for protecting sensitive information—like session tokens or authentication credentials—stored in cookies from attacks such as Cross-Site Scripting (XSS).
