@@ -2,6 +2,31 @@
 
 I share my technical learning publicly to deepen my understanding, help others, and connect with the community. Public learning invites feedback, collaboration, and faster growth for everyone involved.
 
+console.log("A");
+
+setTimeout(() => console.log("B"), 0);
+
+Promise.resolve().then(() => console.log("C"));
+
+(async () => {
+ console.log("D");
+ await null;
+ console.log("E");
+})();
+
+console.log("F");
+
+
+🤯 Hint:
+Think about the event loop order:
+
+Synchronous 🧩
+
+Microtasks (Promises, await) ⚡
+
+Macrotasks (setTimeout) ⏰
+
+
 ### Delegate anything possible (like gzip compression, SSL termination) to a reverse proxy instead of handling it directly in Node.js.
 
 Node.js runs on a single thread and is not optimized for CPU-intensive tasks such as compressing responses or terminating SSL connections. Offloading these tasks to specialized infrastructure (e.g., Nginx, HAProxy, or cloud load balancers) frees up your Node.js process to focus purely on application logic and improves overall performance and scalability.
