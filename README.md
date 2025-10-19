@@ -2,6 +2,9 @@
 
 I share my technical learning publicly to deepen my understanding, help others, and connect with the community. Public learning invites feedback, collaboration, and faster growth for everyone involved.
 
+# Event loop order
+
+```
 console.log("A");
 
 setTimeout(() => console.log("B"), 0);
@@ -15,7 +18,7 @@ Promise.resolve().then(() => console.log("C"));
 })();
 
 console.log("F");
-
+```
 
 🤯 Hint:
 Think about the event loop order:
