@@ -29,6 +29,13 @@ Microtasks (Promises, await) ⚡
 
 Macrotasks (setTimeout) ⏰
 
+One macrotask execution cycle includes:
+
+- Execute the macrotask.
+
+- Execute all microtasks in the microtask queue (all of them, not just one).
+
+- Then move to the next macrotask.
 
 ### Delegate anything possible (like gzip compression, SSL termination) to a reverse proxy instead of handling it directly in Node.js.
 
