@@ -2,6 +2,34 @@
 
 I share my technical learning publicly to deepen my understanding, help others, and connect with the community. Public learning invites feedback, collaboration, and faster growth for everyone involved.
 
+# useTransition > useState
+
+`useState` for loading is like hard-coding a traffic light for every car. useTransition says:
+
+> “Let React’s traffic system handle it.”
+
+```
+// old version
+const [loading, setLoading] = useState(false);
+
+const handleFetch = async (id) => {
+  setLoading(true);
+  await someFetchCall(id);
+  setLoading(false);
+}
+
+// recommended
+const [loading, startLoadingTransition] = useTransition();
+
+const handleFetch = (id) => {
+  startLoadingTransition(async () => {
+    await someFetchCall(id);
+  });
+}
+```
+
+```
+
 # Event loop order
 
 ```
