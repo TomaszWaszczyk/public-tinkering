@@ -28,8 +28,6 @@ const handleFetch = (id) => {
 }
 ```
 
-```
-
 # Event loop order
 
 ```
