@@ -2,6 +2,27 @@
 
 I share my technical learning publicly to deepen my understanding, help others, and connect with the community. Public learning invites feedback, collaboration, and faster growth for everyone involved.
 
+# Optimistic locking
+
+Concurrency control technique where transactions proceed without locking resources, assuming conflicts are rare, and validation is done before commit. If a conflict is detected (another transaction modified the data first), the transaction is rolled back and typically retried, thus allowing higher concurrency and better throughput in environments with low contention.
+
+```
+@Entity
+public class Product {
+
+    @Id
+    private Long id;
+
+    private String name;
+
+    // Version field for optimistic locking
+    @Version
+    private Long version;
+
+    // getters and setters
+}
+```
+
 # useTransition > useState
 
 `useState` for loading is like hard-coding a traffic light for every car. useTransition says:
