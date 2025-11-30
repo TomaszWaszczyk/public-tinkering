@@ -51,6 +51,8 @@ const handleFetch = (id) => {
 
 # Event loop order
 
+The Node.js event loop has six main phases: timers, pending callbacks, idle/prepare, poll, check, and close callbacks. Timers handle setTimeout/setInterval, poll handles most I/O, check runs setImmediate, and microtasks (process.nextTick, Promises) are run between callbacks, giving them higher priority than normal phase callbacks.
+
 ```
 console.log("A");
 
