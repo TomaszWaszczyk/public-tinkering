@@ -2,6 +2,24 @@
 
 I share my technical learning publicly to deepen my understanding, help others, and connect with the community. Public learning invites feedback, collaboration, and faster growth for everyone involved.
 
+### The Richardson Maturity Model
+
+Simple way to describe how “RESTful” an API really is. It defines four levels (0–3), where each level adds more usage of HTTP semantics and REST principles.
+
+Level 0 – “Swamp of POX”
+Everything goes through a single endpoint, usually one HTTP method (often POST). HTTP is used only as a transport tunnel, and the real action is described in the request body.
+
+Level 1 – Resources
+The API starts exposing multiple endpoints representing resources, like /users or /orders/123. However, it may still overuse a single HTTP method and not leverage HTTP fully.
+
+Level 2 – HTTP Verbs & Status Codes
+Resources are combined with proper use of HTTP methods: GET for reading, POST for creating, PUT/PATCH for updating, DELETE for removing, plus meaningful status codes. This is where most practical “REST APIs” end up.
+
+Level 3 – Hypermedia (HATEOAS)
+On top of Level 2, responses include links and hypermedia controls that tell the client what it can do next. The client discovers navigation and actions dynamically, similar to how a human browses web pages.
+
+In practice, aiming for Level 2 gives a clean, predictable API that fits well with HTTP. Level 3 is more advanced and rarely fully implemented, but it’s useful as a target when designing truly RESTful systems.
+
 # Optimistic locking
 
 Concurrency control technique where transactions proceed without locking resources, assuming conflicts are rare, and validation is done before commit. If a conflict is detected (another transaction modified the data first), the transaction is rolled back and typically retried, thus allowing higher concurrency and better throughput in environments with low contention.
