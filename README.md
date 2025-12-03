@@ -2,6 +2,12 @@
 
 I share my technical learning publicly to deepen my understanding, help others, and connect with the community. Public learning invites feedback, collaboration, and faster growth for everyone involved.
 
+### In React props object are passed as a reference not a value
+
+If the parent mutates an object prop in place, the child sees the change, but React may not re-render if the object reference didn’t change.
+
+That’s why the recommended pattern is to treat props/state as immutable and always create a new object/array when updating, so React sees a new reference and re-renders.
+
 ### The Richardson Maturity Model
 
 Simple way to describe how “RESTful” an API really is. It defines four levels (0–3), where each level adds more usage of HTTP semantics and REST principles.
