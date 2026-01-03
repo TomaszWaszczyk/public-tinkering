@@ -2,6 +2,10 @@
 
 I share my technical learning publicly to deepen my understanding, help others, and connect with the community. Public learning invites feedback, collaboration, and faster growth for everyone involved.
 
+### Designing 
+
+![designing systems](./resources/data-intensive-book.webp)
+
 ### In React props object are passed as a reference not a value
 
 If the parent mutates an object prop in place, the child sees the change, but React may not re-render if the object reference didn’t change.
