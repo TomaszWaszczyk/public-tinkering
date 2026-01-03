@@ -2,7 +2,7 @@
 
 I share my technical learning publicly to deepen my understanding, help others, and connect with the community. Public learning invites feedback, collaboration, and faster growth for everyone involved.
 
-### Designing 
+### Designing Data-Intensive Applications
 
 ![designing systems](./resources/data-intensive-book.webp)
 
