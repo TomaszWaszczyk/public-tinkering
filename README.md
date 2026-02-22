@@ -2,6 +2,14 @@
 
 I share my technical learning publicly to deepen my understanding, help others, and connect with the community. Public learning invites feedback, collaboration, and faster growth for everyone involved.
 
+### copyOf in Java
+
+```
+Map.copyOf() - IMMUTABLE object
+Map.copyOf(mappings);  // Thread-safe without synchronize
+Map.copyOf() uses System.arraycopy() - native C-speed!
+```
+
 ### IoC - Coupling and Cohesion
 
 > Dependency inversion control is a natural way to avoid tight coupling because we relay on interface, not inmplementation.
