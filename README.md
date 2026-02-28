@@ -2,6 +2,8 @@
 
 I share my technical learning publicly to deepen my understanding, help others, and connect with the community. Public learning invites feedback, collaboration, and faster growth for everyone involved.
 
+https://www.hyrumslaw.com
+
 ### pgAudit Use Case: Financial Compliance Auditing
 
 Scenario: A bank needs to track all changes to customer account balances for regulatory compliance (SOX, PCI-DSS) and fraud detection.
