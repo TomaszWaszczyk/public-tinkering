@@ -2,6 +2,31 @@
 
 I share my technical learning publicly to deepen my understanding, help others, and connect with the community. Public learning invites feedback, collaboration, and faster growth for everyone involved.
 
+### pgAudit Use Case: Financial Compliance Auditing
+
+Scenario: A bank needs to track all changes to customer account balances for regulatory compliance (SOX, PCI-DSS) and fraud detection.
+
+```
+- Who changed account #12345 balance from $10,000 → $9,800?
+- What SQL was executed? 
+- When exactly? From which IP?
+- Was it SELECT, UPDATE, or mass DELETE?
+```
+
+Standard PostgreSQL logs lack structured audit trails for forensics.
+
+Solution: pgAudit
+
+```
+LOG: AUDIT: SESSION,47,1,READ,SELECT,TABLE,public.accounts,"SELECT balance FROM accounts WHERE id = 12345",2026-02-28 15:17:23 CET,user123@10.0.2.15(5432)
+
+LOG: AUDIT: SESSION,48,1,WRITE,UPDATE,TABLE,public.accounts,"UPDATE accounts SET balance = balance - 200 WHERE id = 12345",2026-02-28 15:17:45 CET,suspicious_user@203.0.113.5(5432)
+
+LOG: AUDIT: SESSION,49,1,DDL,CREATE TABLE,TABLE,public.suspicious_transfers,"CREATE TABLE suspicious_transfers AS SELECT * FROM accounts",2026-02-28 15:18:01 CET,admin@192.168.1.100(5432)
+```
+
+pgAudit turns PostgreSQL into a compliance-ready database without trigger overhead or app-layer logging complexity.
+
 ### copyOf in Java
 
 ```
