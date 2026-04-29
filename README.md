@@ -161,6 +161,8 @@ This has been reported many times — `Cannot read properties of undefined (read
 
 The practical takeaway: **in TypeORM, `findAndCount` is the workhorse for paginated list endpoints.** Reach for `createQueryBuilder` only when you genuinely need its extra power — and when you do, be wary of the `skip/take` + `leftJoinAndSelect` interaction.
 
+More: https://typeorm.io/docs/advanced-topics/performance-optimizing#21-avoiding-the-n1-query-problem
+
 ### Hyrum's Law
 
 https://www.hyrumslaw.com
