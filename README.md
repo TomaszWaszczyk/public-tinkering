@@ -2,6 +2,167 @@
 
 I share my technical learning publicly to deepen my understanding, help others, and connect with the community. Public learning invites feedback, collaboration, and faster growth for everyone involved.
 
+### TypeORM's "DISTINCT pagination" bug
+
+It's not really a single bug — it's a structural problem in TypeORM's `SelectQueryBuilder` that surfaces as **several different runtime errors** depending on your exact combination of `skip` / `take` / `leftJoinAndSelect` / `orderBy`. The most common variant is:
+
+```
+TypeError: Cannot read properties of undefined (reading 'databaseName')
+    at .../typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3748
+```
+
+## What you're actually telling TypeORM to do
+
+```ts
+repo
+  .createQueryBuilder("a")
+  .leftJoinAndSelect("a.vehicle", "vehicle") // join + hydrate relation
+  .where("a.driverId = :id", { id })
+  .orderBy("a.assignedFrom", "DESC")
+  .skip(0)
+  .take(10)
+  .getManyAndCount();
+```
+
+Looks innocent. Conceptually you want: "give me the 10 most recent assignments for this driver, with their vehicle joined."
+
+## What TypeORM is forced to do under the hood
+
+`skip` and `take` are **not** the same as raw SQL `OFFSET` / `LIMIT`. They mean **"paginate over distinct entities, regardless of join cardinality"**. If you have a one-to-many join, the joined rows duplicate the parent — so applying `LIMIT 10` directly to the joined query would cut you off at 10 _rows_, not 10 entities.
+
+To honor that semantic, TypeORM rewrites your query into **two queries**:
+
+1. **The "ids query"** — a `SELECT DISTINCT a.id FROM … ORDER BY … OFFSET … LIMIT …` over a subquery, picking the 10 distinct primary keys.
+2. **The "main query"** — `SELECT … FROM … WHERE a.id IN (<those 10>) … ORDER BY …` to load full entities + joined relations.
+
+That works fine when everything you put in `ORDER BY` is a column TypeORM can identify in entity metadata. The ids query needs to:
+
+- Add every ORDER BY column to the SELECT list (Postgres requires `SELECT DISTINCT … ORDER BY x` to include `x` in the projection — otherwise: _"for SELECT DISTINCT, ORDER BY expressions must appear in select list"_).
+- Re-alias every column under a synthetic `distinctAlias` outer subquery.
+- Look up `databaseName`, `propertyPath`, etc. from entity metadata for each one.
+
+## Where it breaks
+
+That metadata lookup is fragile. Three failure modes show up routinely.
+
+### 1. Raw quoted columns in `orderBy`
+
+```ts
+.orderBy('a."assignedFrom"', "DESC") // raw expression, not a property
+```
+
+TypeORM can't resolve `a."assignedFrom"` to a column metadata object. The DISTINCT rewrite pretends it's a synthetic expression and emits SQL like `SELECT DISTINCT … ORDER BY a_assignedFrom`, where `a_assignedFrom` is missing from the projection. Postgres errors with the _"ORDER BY expressions must appear in select list"_ message.
+
+### 2. `leftJoinAndSelect` + `skip/take` + multi-column ordering — the `databaseName` crash
+
+```ts
+.leftJoinAndSelect("a.vehicle", "vehicle")
+.orderBy("a.assignedFrom", "DESC")
+.skip(0).take(10)
+.getManyAndCount();
+```
+
+TypeORM walks the join tree to figure out which columns to carry into the distinct subquery. For a relation that has nullable joined columns, or for ORDER BY expressions referencing joined-but-not-fully-resolvable columns, it can hit a code path where the metadata for one of the ORDER BY entries comes back `undefined`. It then does `metadata.databaseName` on it and the whole request crashes:
+
+```
+TypeError: Cannot read properties of undefined (reading 'databaseName')
+    at SelectQueryBuilder.ts:3748
+```
+
+This is independent of how the ORDER BY column is spelled — it bites even when you do everything "right".
+
+### 3. Wrong total count
+
+Even when it doesn't crash, `getManyAndCount` with joins gives **inflated totals**. The count query joins everything and counts the joined rows, not the distinct entities. So you get `total: 23` while you only have 10 underlying records — and your pagination breaks.
+
+## The proper fix — `findAndCount`
+
+`findAndCount` and the rest of the `Repository.find*` family use a **completely different code path**. Internally they:
+
+- Run the count query against the **bare entity table only**, no joins → correct total.
+- Run a paginated SELECT against the bare entity table → correct page of entity ids.
+- Then load the requested relations as **secondary queries** using `IN (<page ids>)` — the so-called "relation loaders" — and stitch the result objects together in JS.
+
+No DISTINCT subquery, no `databaseName` metadata trip, no inflated counts. Trade-off: it's `1 + N_relations` queries instead of one big join. For pagination that's almost always what you want — pages are small, the join would have been hydrated into JS objects anyway.
+
+### Before
+
+```ts
+async findHistoryByDriver(driverId: string, query: AssignmentQueryDto) {
+  return this.paginate(query, (qb) =>
+    qb
+      .where('a."driverId" = :driverId', { driverId })
+      .leftJoinAndSelect("a.vehicle", "vehicle"),
+  );
+}
+
+private async paginate(query, apply) {
+  const page = query.page ?? 1;
+  const limit = query.limit ?? 20;
+
+  const qb = this.repo
+    .createQueryBuilder("a")
+    .orderBy('a."assignedFrom"', "DESC");
+
+  apply(qb);
+
+  const [data, total] = await qb
+    .skip((page - 1) * limit)
+    .take(limit)
+    .getManyAndCount(); // 💥 boom
+
+  return { data, total, page, limit, totalPages: Math.ceil(total / limit) };
+}
+```
+
+### After
+
+```ts
+async findHistoryByDriver(driverId: string, query: AssignmentQueryDto) {
+  return this.paginate(query, { driverId }, { vehicle: true });
+}
+
+private async paginate(
+  query: AssignmentQueryDto,
+  where: FindOptionsWhere<VehicleDriverAssignment>,
+  relations: FindOptionsRelations<VehicleDriverAssignment>,
+) {
+  const page = query.page ?? 1;
+  const limit = query.limit ?? 20;
+
+  const [data, total] = await this.repo.findAndCount({
+    where,
+    relations,
+    order: { assignedFrom: "DESC" },
+    skip: (page - 1) * limit,
+    take: limit,
+  });
+
+  return { data, total, page, limit, totalPages: Math.ceil(total / limit) };
+}
+```
+
+## Rules of thumb
+
+1. **Need pagination + relations? Use `findAndCount` + `relations: { … }`.** Not `createQueryBuilder` with `leftJoinAndSelect` + `skip/take`.
+2. **Use `createQueryBuilder` only when you need things `find*` can't express:** sub-selects, raw aggregates, `loadRelationCountAndMap`, computed columns, `FOR UPDATE`, dynamic search ILIKE chains, etc.
+3. **If you must paginate over a QB with joins**, either:
+   - run the count query separately against the bare table, then a joined query for the page, or
+   - use `qb.distinct(true)` and put the order-by column in a select expression.
+4. **Always reference entity properties in `orderBy`/`where`** (`'a.assignedFrom'`), never raw quoted columns (`'a."assignedFrom"'`). The latter only matters when you really need a SQL expression Postgres-side, like `LOWER("name")` or a `COALESCE`.
+
+## Why it's still around in 2026
+
+This has been reported many times — `Cannot read properties of undefined (reading 'databaseName')` is a recurring failure mode the maintainers see. The relevant tickets cluster around:
+
+- `getManyAndCount` returning inflated totals with joins (open since 2018).
+- DISTINCT-subquery generation crashing on a subset of `orderBy` shapes.
+- The general recommendation in the docs (since ~v0.3) to prefer `find*` for "list with relations" use cases.
+
+The practical takeaway: **in TypeORM, `findAndCount` is the workhorse for paginated list endpoints.** Reach for `createQueryBuilder` only when you genuinely need its extra power — and when you do, be wary of the `skip/take` + `leftJoinAndSelect` interaction.
+
+
+
 https://www.hyrumslaw.com
 
 ### pgAudit Use Case: Financial Compliance Auditing
