@@ -2,6 +2,10 @@
 
 I share my technical learning publicly to deepen my understanding, help others, and connect with the community. Public learning invites feedback, collaboration, and faster growth for everyone involved.
 
+### Agentic Coding
+
+https://sgoldfarb2.github.io/practical-prompt-engineering/
+
 ### TypeORM's "DISTINCT pagination" bug
 
 It's not really a single bug — it's a structural problem in TypeORM's `SelectQueryBuilder` that surfaces as **several different runtime errors** depending on your exact combination of `skip` / `take` / `leftJoinAndSelect` / `orderBy`. The most common variant is:
