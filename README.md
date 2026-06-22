@@ -2,6 +2,11 @@
 
 I share my technical learning publicly to deepen my understanding, help others, and connect with the community. Public learning invites feedback, collaboration, and faster growth for everyone involved.
 
+## Token efficiency software development
+
+1. https://github.com/headroomlabs-ai/headroom
+
+
 ## Open Source as a product strategy
 
 The "Open First" philosophy aligns naturally with what the device manufacturer has built its flagship product on: transparency, community, and hardware that its users can actually understand and extend. The original device spawned a thriving ecosystem of third-party firmware and tools precisely because the platform was open. The new model, built on a fully mainlined Linux stack, takes that ethos further.
