@@ -4,6 +4,8 @@ I share my technical learning publicly to deepen my understanding, help others, 
 
 ## Trust Architect
 
+## Challenger Agent
+
 ## Token efficiency software development
 
 1. https://github.com/headroomlabs-ai/headroom
