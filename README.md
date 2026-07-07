@@ -9,6 +9,7 @@ I share my technical learning publicly to deepen my understanding, help others, 
 ## Token efficiency software development
 
 1. https://github.com/headroomlabs-ai/headroom
+2. https://toonformat.dev/
 
 
 ## Open Source as a product strategy
