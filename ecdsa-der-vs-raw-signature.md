@@ -109,3 +109,5 @@ func derToRaw(der []byte, byteLen int) ([]byte, error) {
 | Length varies run-to-run (68–72) | Confirms DER (leading-zero trimming changes the length) |
 
 The variable length is the giveaway: raw `r‖s` and Ed25519 are always a constant size, while DER breathes by a byte or two depending on the integer values. The moment you see a signature length that isn't your expected constant — and especially one that wobbles between runs — reach for a DER↔raw conversion at the boundary before suspecting the crypto itself.
+
+https://asecuritysite.com/ecc/sigs5
