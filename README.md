@@ -2,7 +2,7 @@
 
 I share my technical learning publicly to deepen my understanding, help others, and connect with the community. Public learning invites feedback, collaboration, and faster growth for everyone involved.
 
-## Engineer compatible with agents
+## Agent-Compatible Software Engineer
 
 https://boundaryml.com
 
