@@ -6,6 +6,8 @@ I share my technical learning publicly to deepen my understanding, help others, 
 
 https://boundaryml.com
 
+https://duckdb.org
+
 ## Trust Architect
 
 ## Challenger Agent
