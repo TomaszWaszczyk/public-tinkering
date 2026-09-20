@@ -4,6 +4,8 @@ I share my technical learning publicly to deepen my understanding, help others, 
 
 ## Agent-Compatible Software Engineer
 
+> AI lowered the cost of writing code, not the value of understanding what the code is doing.
+
 https://boundaryml.com
 
 https://duckdb.org
