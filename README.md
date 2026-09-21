@@ -10,6 +10,8 @@ https://boundaryml.com
 
 https://duckdb.org
 
+https://omp.sh
+
 ## Trust Architect
 
 SE: https://github.com/tropicsquare/tropic01/blob/main/doc/application_notes/ODN_TR01_app_008_sec_arch_1v1.pdf
