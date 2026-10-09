@@ -12,6 +12,10 @@ I share my technical learning publicly to deepen my understanding, help others, 
 
 ![leroy architecture](./resources/grill-me.png)
 
+![leroy architecture](./resources/warstwy-modeli.png)
+
+![leroy architecture](./resources/ai-burnout.png)
+
 ## Agent-Compatible Software Engineer
 
 > AI lowered the cost of writing code, not the value of understanding what the code is doing.
