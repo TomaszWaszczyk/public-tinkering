@@ -2,6 +2,14 @@
 
 I share my technical learning publicly to deepen my understanding, help others, and connect with the community. Public learning invites feedback, collaboration, and faster growth for everyone involved.
 
+## DATA First, AI Second Architecture
+
+![leroy architecture](./resources/leroy-architecture-3.png)
+
+![leroy architecture](./resources/leroy-architecture-1.png)
+
+![leroy architecture](./resources/leroy-architecture-2.png)
+
 ## Agent-Compatible Software Engineer
 
 > AI lowered the cost of writing code, not the value of understanding what the code is doing.
