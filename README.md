@@ -6,7 +6,7 @@ I share my technical learning publicly to deepen my understanding, help others, 
 
 ![leroy architecture](./resources/leroy-architecture-3.png)
 
-![leroy architecture](./resources/leroy-architecture-1.png)
+![leroy architecture](./resources/leroy-architecture.png)
 
 ![leroy architecture](./resources/leroy-architecture-2.png)
 
