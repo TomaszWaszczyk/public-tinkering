@@ -24,6 +24,8 @@ I share my technical learning publicly to deepen my understanding, help others, 
 
 ![leroy architecture](./resources/erste-sdlc.png)
 
+![leroy architecture](./resources/c4.png)
+
 ## Agent-Compatible Software Engineer
 
 > AI lowered the cost of writing code, not the value of understanding what the code is doing.
