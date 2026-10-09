@@ -16,6 +16,14 @@ I share my technical learning publicly to deepen my understanding, help others, 
 
 ![leroy architecture](./resources/ai-burnout.png)
 
+> wieloagentowy wirtualny zespół architektów i analityków
+
+![leroy architecture](./resources/wieloagentowy-wirtualny-zespol-architektow-i-analitykow.png)
+
+> code index oraz taksonomia pomiędzy dokumentami w dokumentacji
+
+![leroy architecture](./resources/erste-sdlc.png)
+
 ## Agent-Compatible Software Engineer
 
 > AI lowered the cost of writing code, not the value of understanding what the code is doing.
