@@ -2,6 +2,8 @@
 
 I share my technical learning publicly to deepen my understanding, help others, and connect with the community. Public learning invites feedback, collaboration, and faster growth for everyone involved.
 
+## 'XYZ Assistant is AI and can make mistakes.' Strategy
+
 ## DATA First, AI Second Architecture
 
 ![leroy architecture](./resources/leroy-architecture-3.png)
