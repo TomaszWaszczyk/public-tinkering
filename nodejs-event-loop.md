@@ -156,19 +156,19 @@ The main thread never waits on I/O itself. It hands the work off and later picks
 ```mermaid
 sequenceDiagram
     participant JS as Your JS (main thread)
-    participant Loop as Event loop (libuv)
+    participant EventLoop as Event loop (libuv)
     participant OS as Operating system async I/O
     participant Pool as Thread pool (4 threads)
 
-    JS->>Loop: http request / socket.write
-    Loop->>OS: register socket (epoll / kqueue / IOCP)
-    JS->>Loop: fs.readFile / crypto.pbkdf2
-    Loop->>Pool: run the job on a worker thread
-    Note over JS: Call stack is now empty,<br/>so the loop keeps spinning
-    OS-->>Loop: socket has data
-    Loop->>JS: run the callback (poll phase)
-    Pool-->>Loop: job finished
-    Loop->>JS: run the callback (poll phase)
+    JS->>EventLoop: http request / socket.write
+    EventLoop->>OS: register socket (epoll / kqueue / IOCP)
+    JS->>EventLoop: fs.readFile / crypto.pbkdf2
+    EventLoop->>Pool: run the job on a worker thread
+    Note over JS: Call stack is now empty,<br/>so the event loop keeps spinning
+    OS-->>EventLoop: socket has data
+    EventLoop->>JS: run the callback (poll phase)
+    Pool-->>EventLoop: job finished
+    EventLoop->>JS: run the callback (poll phase)
 ```
 
 ---
